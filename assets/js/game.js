@@ -71,23 +71,23 @@ var fight = function(enemy) {
         if(fightOrSkip()){
             break;
         }
-        if (promptFight === "fight" || promptFight === "FIGHT") {
-            var damage = randomNumber((playerInfo.attack - 3), playerInfo.attack);
-            enemy.health = Math.max(0, enemy.health - damage);
-            console.log(
-                playerInfo.name + " attacked " + enemy.name + ". " + enemy.name + " now has " + enemy.health + " health remaining."
-            );
+        
+        var damage = randomNumber((playerInfo.attack - 3), playerInfo.attack);
+        enemy.health = Math.max(0, enemy.health - damage);
+        console.log(
+            playerInfo.name + " attacked " + enemy.name + ". " + enemy.name + " now has " + enemy.health + " health remaining."
+        );
 
-            var damage = randomNumber(enemy.attack - 3, enemy.attack);
-            playerInfo.health = Math.max(0, playerInfo.health - damage);
+        var damage = randomNumber(enemy.attack - 3, enemy.attack);
+        playerInfo.health = Math.max(0, playerInfo.health - damage);
             
-            console.log(
-                enemy.name + " attacked " + playerInfo.name + ". " + playerInfo.name + " now has " + playerInfo.health + " health remaining."
-            );
+        console.log(
+            enemy.name + " attacked " + playerInfo.name + ". " + playerInfo.name + " now has " + playerInfo.health + " health remaining."
+        );
             
-            if (enemy.health <= 0) {
-                window.alert(enemy.name + " has died!");
-                playerInfo.money = playerInfo.money + 20;
+        if (enemy.health <= 0) {
+            window.alert(enemy.name + " has died!");
+            playerInfo.money = playerInfo.money + 20;
             } else {
                 window.alert(enemy.name + " still has " + enemy.health + " health left.");
             }
@@ -97,9 +97,7 @@ var fight = function(enemy) {
             } else {
                 window.alert(playerInfo.name + " still has " + playerInfo.health + " health left.");
             }
-        } else {
-            window.alert ("You need to choose a valid option. Try again!");
-        }
+        
     }
 };
 
@@ -110,7 +108,6 @@ var startGame = function() {
     for(var i=0; i < enemyInfo.length; i++) {
         if (playerInfo.health > 0){
             window.alert("Welcome to Robot Gladiators! Round " + (i + 1));
-            debugger;
             var pickedEnemyObj = enemyInfo[i];
             pickedEnemyObj.health = randomNumber(40,60);
             fight(pickedEnemyObj);
@@ -146,23 +143,21 @@ var endGame = function() {
 
 var shop = function() {
     var shopOptionPrompt = window.prompt(
-        "Would you like to REFILL your health, UPGRADE your attack, or Leave the shop? Please enter one: 'REFILL', 'UPGRADE', or 'LEAVE' to make a choice."
+        "Would you like to REFILL your health, UPGRADE your attack, or Leave the shop? Please enter one 1 to refill, 2 to upgrade, or 3 to leave"
     );
+    shopOptionPrompt = parseInt(shopOptionPrompt);
     switch (shopOptionPrompt) {
-        case "REFILL":
-        case "refill":
+        case 1:
             playerInfo.refillHealth();
             break;
-        case "REFILL":
-        case "upgrade":
+        case 2:
             playerInfo.upgradeAttack();
             break;
-        case "LEAVE":
-        case "leave":
+        case 3:
             window.alert("leaving the store.");
             break;
         default:
-            window.alert("You did not pick a valid option.");
+            window.alert("You did not pick a valid option. Try again.");
             shop();
             break;
     }
